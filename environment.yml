@@ -1,0 +1,21 @@
+name: risk_tolerance
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - python=3.10
+  - numpy
+  - pandas
+  - scipy
+  - scikit-learn
+  - matplotlib
+  - seaborn
+  - jupyterlab
+  - statsmodels
+  - pip
+  - pip:
+      - plotly
+      - xgboost
+      - catboost
+      - lightgbm
+      
