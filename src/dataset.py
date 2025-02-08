@@ -9,7 +9,8 @@ df
 def data_sanity(df):
     """
     Perform basic data sanity checks on a Pandas DataFrame.
-    Displays key dataset information and statistics.
+    Disp
+    lays key dataset information and statistics.
     """
     print("\nFirst 5 rows of the DataFrame:")
     print(df.head())
@@ -54,6 +55,8 @@ def rename_columns(df):
 df = data_sanity(df)
 
 df = rename_columns(df)
+
+print("\nRenamed Columns:", df.columns)
 
 
 
