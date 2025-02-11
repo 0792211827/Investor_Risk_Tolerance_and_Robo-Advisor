@@ -6,7 +6,7 @@ import os
 
 project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), "../.."))
 sys.path.append(os.path.join(project_root, "src"))
-from feature_preprocessing import plot_log_transformation, standard_scale_features
+from src.feature_preprocessing.feature_transformation import plot_log_transformation, standard_scale_features
 
 
 def load_model(model_path):
@@ -40,7 +40,7 @@ if __name__ == "__main__":
     model_path = "best_model.pkl"
     columns_to_log_transform = ['INCOME', 'NETWORTH']
     
-    # Example input for testing (Replace with actual user input in Streamlit)
+    # User input for prediction
     user_input = {
          'AGE': 30,
          'EDUCATION_LEVEL': 3,
