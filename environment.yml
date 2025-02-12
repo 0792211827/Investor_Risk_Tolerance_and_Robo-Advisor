@@ -15,9 +15,13 @@ dependencies:
   - statsmodels
   - pip
   - pip:
+      - pandas_datareader
+      - pypfopt
       - plotly
       - xgboost
       - catboost
       - lightgbm
       - yfinance
+
+
       
