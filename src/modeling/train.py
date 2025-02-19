@@ -3,7 +3,6 @@ import joblib
 import numpy as np
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import mean_squared_error, mean_absolute_error
-from catboost import CatBoostRegressor
 from sklearn.ensemble import (
     AdaBoostRegressor,
     GradientBoostingRegressor,
@@ -16,7 +15,6 @@ from xgboost import XGBRegressor
 
 
 df = pd.read_pickle('/Users/sylviabhoke/Downloads/personal_repos folder/Investor_Risk_Tolerance_and_Robo-Advisor/data/processed/processed_data.pkl')
-
 df
 
 df = df.replace([np.inf, -np.inf], np.nan).dropna()
@@ -36,7 +34,6 @@ def train_and_save_best_model(df, model_path):
         "Gradient Boosting": GradientBoostingRegressor(),
         "Linear Regression": LinearRegression(),
         "XGBRegressor": XGBRegressor(),
-        "CatBoosting Regressor": CatBoostRegressor(verbose=False),
         "AdaBoost Regressor": AdaBoostRegressor(),
     }
     

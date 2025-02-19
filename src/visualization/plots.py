@@ -13,21 +13,22 @@ def different_features(df):
     """
     Identifies discrete and continuous features in the DataFrame.
     """
-    discrete_features = [col for col in df.columns if len(df[col].unique()) < 25 and col not in ['RISK07']]
-    continuous_features = [col for col in df.columns if col not in discrete_features and col not in ['RISK07']]
-    
-    return discrete_features, continuous_features
+    categorical_features = [col for col in df.columns if df[col].dtype == 'object']
+    continuous_features = [col for col in df.columns if (df[col].dtype == 'int' or df[col].dtype == 'float') and len(df[col].unique()) >= 10 and col != 'RISK_TOLERANCE']
+    discrete_features = [col for col in df.columns if col not in categorical_features and col not in continuous_features and len(df[col].unique()) < 10]
 
-discrete_features, continuous_features = different_features(df)
+    return categorical_features, discrete_features, continuous_features
 
-discrete_features, continuous_features
+categorical_features, discrete_features, continuous_features = different_features(df)
 
-def plot_features(df, discrete_features, continuous_features):
+categorical_features, discrete_features, continuous_features
+
+def plot_features(df,categorical_features, discrete_features, continuous_features):
     """
     Plots count plots for discrete features and distribution plots for continuous features.
     """
     # Plot count plots for discrete features
-    for col in discrete_features:
+    for col in discrete_features + categorical_features:
         plt.figure(figsize=(8, 4))
         sns.countplot(data=df, x=col, palette="viridis")
         plt.title(f'Count Plot of {col}')
@@ -41,5 +42,5 @@ def plot_features(df, discrete_features, continuous_features):
         plt.title(f'Distribution Plot of {col}')
         plt.show()
 
-discrete_features, continuous_features = different_features(df)
-plot_features(df, discrete_features, continuous_features)
+
+plot_features(df,categorical_features, discrete_features, continuous_features)

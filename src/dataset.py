@@ -32,7 +32,7 @@ def data_sanity(df):
     print(df.isnull().sum())
     
     # dropping some columns
-    columns_to_drop = ['Unnamed: 0', 'LIFECL07']
+    columns_to_drop = ['Unnamed: 0']
     for col in columns_to_drop:
        if col in df.columns:
           df = df.drop(col, axis=1)
@@ -40,25 +40,13 @@ def data_sanity(df):
   
     return df
 
-def rename_columns(df):
-    """
-    Renames specific columns in the DataFrame.
-    """
-    rename_dict = {
-        'AGE07': 'AGE', 'EDCL07': 'EDUCATION_LEVEL', 'MARRIED07': 'MARITAL_STATUS',
-        'KIDS07': 'NO_OF_KIDS', 'OCCAT107': 'OCCUPATION_CATEGORY', 'INCOME07': 'INCOME',
-        'RISK07': 'RISK_LEVEL', 'WSAVED07': 'SPENDING_VS_INCOME', 'SPENDMOR07': 'SPENDING_LEVEL',
-        'NETWORTH07': 'NETWORTH', 'TrueRiskTol': 'RISK_TOLERANCE'
-    }
-    
-    df = df.rename(columns=rename_dict)
-    return df
+
 
 df = data_sanity(df)
 
-df = rename_columns(df)
 
-print("\nRenamed Columns:", df.columns)
+
+print("\n Columns:", df.columns)
 
 
 
@@ -67,6 +55,7 @@ print("\nRenamed Columns:", df.columns)
 df.to_pickle('/Users/sylviabhoke/Downloads/personal_repos folder/Investor_Risk_Tolerance_and_Robo-Advisor/data/interim/processed_data.pkl')
 
 
+# The following function fetches 50 historical stock data from Yahoo Finance and extracts the closing prices.
 def fetch_stock_data(stock_tickers, start_date, end_date):
     """
     Fetches historical stock data from Yahoo Finance and extracts the closing prices.

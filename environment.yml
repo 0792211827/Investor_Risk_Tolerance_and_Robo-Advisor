@@ -4,7 +4,7 @@ channels:
   - defaults
 dependencies:
   - python=3.10
-  - numpy
+  - numpy  
   - pandas
   - scipy
   - scikit-learn
@@ -19,7 +19,7 @@ dependencies:
       - pypfopt
       - plotly
       - xgboost
-      - catboost
+      - catboost  
       - lightgbm
       - yfinance
 

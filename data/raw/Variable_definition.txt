@@ -1,18 +1,18 @@
 - AGE: This are the ages of the respondents. 
 
-- EDUCATION_LEVEL: There are four education categories, where 1 represents no high school and 4 represents college degree.
+- EDUCATION_LEVEL: There are four education categories.
 
-- MARITAL_STATUS: There are two categories to represent marital status, where 1 represents married and 2 represents unmarried.
+- MARITAL_STATUS: There are two categories to represent marital status.
 
-- OCCUPATION_CATEGORY: This represents occupation category. A value of 1 represents managerial status and 4 represents unemployed.
+- OCCUPATION_CATEGORY: This represents occupation category.From unemployed to managerial level/senior level 
 
 - NO_OF_KIDS: Number of children.
 
-- SPENDING_LEVEL: This is how individual’s spend their income ranging from ! for most spending to 5 for least spending.
+- SPENDING_LEVEL: This is how individual’s spend their income ranging from 1 for most spending to 5 for least spending.
 
 - INCOME: This represents the income of the individual.
 
-- SPENDING_VS_INCOME: This represents the individual’s spending versus income, split into three categories. For example, 1 represents spending exceeded income.
+- SPENDING_VS_INCOME: This represents the individual’s spending versus income, split into three categories. 
 
 - NETWORTH: This represents networth of the respomdents.
 
