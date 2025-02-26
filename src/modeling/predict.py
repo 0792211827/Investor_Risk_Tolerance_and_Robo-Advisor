@@ -8,7 +8,7 @@ import os
 
 project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), "../.."))
 sys.path.append(project_root)
-from src.feature_preprocessing.feature_transformation import log_transformation, standard_scale_features, encode_categorical_features
+from src.feature_preprocessing.feature_transformation import log_transformation,  encode_categorical_features
 from src.portfolio_optimization.markowitz import calculate_portfolio_statistics as calc_portfolio_stats, optimize_portfolio as opt_portfolio
 
 
@@ -26,7 +26,7 @@ def preprocess_input_data(df, columns_to_log_transform):
     """
     df = log_transformation(df, columns_to_log_transform)
     df = encode_categorical_features(df)
-    df = standard_scale_features(df)
+    
     return df
 
 def calculate_portfolio_statistics(sample_data):
@@ -85,7 +85,7 @@ def make_predictions(input_data, model_path, columns_to_log_transform):
 if __name__ == "__main__":
     model_path = os.path.join(project_root, "models", "best_model.pkl")
     columns_to_log_transform = ['INCOME', 'NETWORTH']
-    
+    le_columns = ['EDUCATION_LEVEL', 'MARITAL_STATUS', 'OCCUPATION_CATEGORY', 'SPENDING_VS_INCOME']
     
     # User input for prediction
     user_input = {
