@@ -31,16 +31,41 @@ The app is built using **Streamlit** for a user-friendly interface and integrate
 
 ---
 
-## 📂 Project Structure  
-
-
-
-
-
+  
 ### Project structure 
+```
+📁 data/                      # Stores raw and processed datasets  
+ ├── 📁 raw/                  # Original unprocessed data  
+ │    ├── Risk_data.csv       # Investor responses for risk prediction  
+ │    ├── Stock_data.csv      # Market data for portfolio optimization  
+ │    ├── Variable_definition.txt  # Dataset variable descriptions  
+ │  
+ ├── 📁 processed/             # Cleaned and feature-engineered datasets  
+ │    ├── processed_data.pkl  # Preprocessed dataset for ML models  
 
-Investor_Risk_Tolerance_and_Robo-Advisor/ │── app.py # Main Streamlit app │── requirements.txt # Dependencies │── README.md # Project documentation │ ├── 📁 data/ # Stores raw, interim, and processed data │ ├── 📁 raw/ # Unprocessed datasets (original CSV files) │ │ ├── Risk_data.csv # Investor data for risk tolerance modeling │ │ ├── Stock_data.csv # Market data for portfolio optimization │ │ ├── Variable_definition.txt # Descriptions of dataset variables │ │ │ ├── 📁 processed/ # Cleaned and feature-engineered datasets │ │ ├── processed_data.pkl # Preprocessed dataset for ML models │ │ │ ├── 📁 external/ # Any externally sourced datasets │ ├── 📁 interim/ # Temporary storage during transformations │ ├── 📁 src/ # Main source code │ ├── 📜 init.py # Marks src as a package │ ├── 📜 config.py # Global configuration settings │ ├── 📜 dataset.py # Functions for loading and processing datasets │ │ │ ├── 📁 feature_preprocessing/ # Feature engineering & preprocessing │ │ ├── 📜 init.py │ │ ├── 📜 feature_transformations.py # Log transforms, standard scaling, etc. │ │ │ ├── 📁 modeling/ # Machine Learning models │ │ ├── 📜 init.py │ │ ├── 📜 train.py # Training ML models for risk tolerance │ │ ├── 📜 predict.py # Making predictions (used by Streamlit) │ │ │ ├── 📁 portfolio_optimization/ # Markowitz optimization & asset allocation │ │ ├── 📜 init.py │ │ ├── 📜 markowitz.py # Markowitz optimization functions │ │ │ ├── 📁 visualization/ # Data visualization scripts │ │ ├── 📜 init.py │ │ ├── 📜 plots.py # Functions to generate plots │ ├── 📁 models/ # Saved trained models │ ├── best_model.pkl # Best performing risk tolerance model │ ├── 📁 notebooks/ # Jupyter notebooks for EDA & experiments │ ├── risk_tolerance.ipynb # Model training for risk tolerance │ ├── portfolio_optimization.ipynb # Portfolio optimization experiments
+📁 src/                        # Main source code  
+ ├── 📁 feature_preprocessing/  # Feature engineering & transformations  
+ │    ├── data_cleaning.py     # Data cleaning & preprocessing  
+ │    ├── transformations.py   # Log transforms, encoding, scaling  
 
+ ├── 📁 modeling/               # Machine learning models  
+ │    ├── train.py             # Training ML models for risk prediction  
+ │    ├── predict.py           # Making predictions using trained models  
+
+ ├── 📁 portfolio_optimization/  # Portfolio optimization logic  
+ │    ├── allocation.py        # Portfolio allocation using risk scores  
+ │    ├── markowitz.py         # Markowitz optimization functions  
+
+📁 models/                     # Saved trained models  
+ ├── best_model.pkl            # Best performing risk tolerance model  
+ ├── portfolio_optimizer.pkl   # Portfolio optimization model  
+
+📁 notebooks/                   # Jupyter notebooks for EDA & experiments  
+ ├── risk_tolerance.ipynb      # ML model training for risk prediction  
+ ├── portfolio_optimization.ipynb  # Portfolio optimization experiments  
+
+```
+---
 
 ### License
 This project is open-source and available under the MIT License.
@@ -52,3 +77,5 @@ Feel free to open issues, submit pull requests, or suggest improvements. Contrib
 * ✅ Expand risk tolerance model with deep learning.
 * ✅ Allow users to manually adjust risk levels.
 * ✅ Add real-time stock data API integration.
+
+---
