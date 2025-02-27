@@ -8,32 +8,29 @@ from sklearn.preprocessing import LabelEncoder
 from pypfopt.efficient_frontier import EfficientFrontier
 from pypfopt import risk_models, expected_returns
 
-
+# Import custom modules
 project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), "../.."))
 sys.path.append(project_root)
 from src.modeling.predict import make_predictions
-from src.feature_preprocessing.feature_transformation import log_transformation,  encode_categorical_features
+from src.feature_preprocessing.feature_transformation import log_transformation, encode_categorical_features
 from src.portfolio_optimization.markowitz import calculate_portfolio_statistics, optimize_portfolio
-
-
-def load_model(model_path):
-    """
-    Loads the trained model from the specified path.
-    """
-    return joblib.load(model_path)
-
-
 
 # Load stock data
 stock_data = pd.read_csv('/Users/sylviabhoke/Downloads/personal_repos folder/Investor_Risk_Tolerance_and_Robo-Advisor/data/raw/stock_data.csv', index_col='Date')
 
-st.title("Investor Risk Tolerance & Robo-Advisor")
+# ---- PAGE TITLE & DESCRIPTION ----
+st.title("📊 Investor Risk Tolerance & Robo-Advisor")
 
-st.markdown("This app is a simple robo-advisor that uses a machine learning model to predict the risk tolerance of an investor based on their responses to a questionnaire. The app then uses the predicted risk tolerance to optimize a portfolio allocation using the Markowitz Portfolio Optimization model.* Step 1: Answer the questionnaire on the sidebar to predict your risk tolerance. * Step 2: Select your preferred portfolio stock/assets for optimization.")
+st.markdown("""
+    This app is a simple robo-advisor that uses a machine learning model to predict the risk tolerance of an investor based on their responses to a questionnaire. The app then uses the predicted risk tolerance to optimize a portfolio allocation using the Markowitz Portfolio Optimization model.
+    
+    **📌 Steps to Follow:**
+    - **Step 1:** Enter your investor characteristics to predict your risk tolerance.
+    - **Step 2:** Select your preferred stocks, and the app will generate the optimal portfolio.
+""")
 
-#sidebar
-# Header for the sidebar
-st.sidebar.header("Investor Risk Tolerance Questionnaire")
+# ---- SIDEBAR: INVESTOR QUESTIONNAIRE ----
+st.sidebar.header("📝 Step 1: Enter Investor Characteristics")
 
 def user_input_features():
     """
@@ -65,57 +62,65 @@ def user_input_features():
     "SPENDING_VS_INCOME": spending_vs_income,
     "SPENDING_LEVEL": spending_level,
     "NETWORTH": net_worth
-        
-}
+    
+   }
 
 
     # **Convert dictionary to a DataFrame and TRANSPOSE it**
     features = pd.DataFrame(user_data, index=[0])
     return features 
     
+
 df = user_input_features()
 
-# **Display the DataFrame**
-st.write("User Input Data:")
-st.write(df)
+# Display user inputs
+st.markdown("### 📋 User Input Summary")
+st.dataframe(df)
 
-# Load the trained model
+# ---- RISK TOLERANCE PREDICTION ----
+st.markdown("## 📈 Step 2: Asset Allocation and Portfolio Performance")
+
+# Load trained model
 model_path = "/Users/sylviabhoke/Downloads/personal_repos folder/Investor_Risk_Tolerance_and_Robo-Advisor/models/best_model.pkl"
 model = joblib.load(model_path)
 
-# 🔹 Step 1: Log Transform `INCOME` & `NETWORTH`
-columns_to_log_transform = ["INCOME", "NETWORTH"]
-
-# 🔹 Step 2: Encode Categorical Features
+# Transform input data
 df = encode_categorical_features(df)
 
-# 🔹 Step 4: Make Prediction
-st.write("### Predicted Risk Tolerance:")
-prediction = model.predict(df)
-st.write(prediction)
-        
-        
-# Portfolio Optimization
-st.write("#### Select your preferred portfolio stock/assets for optimization.")
+# Predict risk tolerance
+predicted_risk_tolerance = model.predict(df)[0]
+st.write(f"**Predicted Risk Tolerance Score:** {predicted_risk_tolerance:.2f} (scale of 100)")
+
+# ---- PORTFOLIO OPTIMIZATION ----
+st.write("### 📊 Portfolio Optimization")
 selected_stocks = st.multiselect("Select Stocks", stock_data.columns)
 
-if selected_stocks:
-    sample_data = stock_data[selected_stocks].copy()
-    risk_tolerance = prediction[0]
-    
-    clean_weights, cumulative_returns = optimize_portfolio(sample_data, risk_tolerance)
-    
-    st.write("#### Portfolio Allocation:")
-    st.bar_chart(clean_weights)
-    
-    # Compute the portfolio value assuming an initial investment of $100
-    initial_investment = 100
-    portfolio_value = initial_investment * cumulative_returns
-    portfolio_value.index = portfolio_value.index.astype(str).str[:4]
+if st.button("SUBMIT"):
+    if selected_stocks:
+        sample_data = stock_data[selected_stocks].copy()
+        clean_weights, cumulative_returns = optimize_portfolio(sample_data, predicted_risk_tolerance)
+        
+        st.markdown("#### 📌 Asset Allocation - Mean-Variance Allocation")
+        st.bar_chart(clean_weights)
 
-    # Display Portfolio Value Growth
-    st.write("#### Portfolio Value of $100 Investment Over Time:")
-    st.line_chart(portfolio_value)
+        # Compute portfolio value assuming an initial investment of $100
+        initial_investment = 100
+        portfolio_value = initial_investment * cumulative_returns
+
+
+        st.markdown("#### 📈 Portfolio Value of $100 Investment Over Time")
+        st.line_chart(portfolio_value)
+
+
+
+
+
+        
+        
+
+
+
+
     
 
 
