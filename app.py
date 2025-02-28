@@ -1,12 +1,9 @@
 import streamlit as st
 import pandas as pd
 import joblib
-import numpy as np
 import sys
 import os
-from sklearn.preprocessing import LabelEncoder
-from pypfopt.efficient_frontier import EfficientFrontier
-from pypfopt import risk_models, expected_returns
+
 
 # Import custom modules
 project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), "../.."))
@@ -19,7 +16,8 @@ from src.portfolio_optimization.markowitz import calculate_portfolio_statistics,
 stock_data = pd.read_csv('/Users/sylviabhoke/Downloads/personal_repos folder/Investor_Risk_Tolerance_and_Robo-Advisor/data/raw/stock_data.csv', index_col='Date')
 
 
-
+# Ensure sidebar remains open
+st.set_page_config(layout="wide", initial_sidebar_state="expanded")
 
 # ---- PAGE TITLE & DESCRIPTION ----
 st.title("📊 Investor Risk Tolerance & Robo-Advisor")
