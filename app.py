@@ -18,6 +18,9 @@ from src.portfolio_optimization.markowitz import calculate_portfolio_statistics,
 # Load stock data
 stock_data = pd.read_csv('/Users/sylviabhoke/Downloads/personal_repos folder/Investor_Risk_Tolerance_and_Robo-Advisor/data/raw/stock_data.csv', index_col='Date')
 
+
+
+
 # ---- PAGE TITLE & DESCRIPTION ----
 st.title("📊 Investor Risk Tolerance & Robo-Advisor")
 
@@ -74,11 +77,11 @@ def user_input_features():
 df = user_input_features()
 
 # Display user inputs
-st.markdown("### 📋 User Input Summary")
+st.markdown("###### User Input Summary")
 st.dataframe(df)
 
 # ---- RISK TOLERANCE PREDICTION ----
-st.markdown("## 📈 Step 2: Asset Allocation and Portfolio Performance")
+st.markdown("#### 📈 Step 2: Asset Allocation and Portfolio Performance")
 
 # Load trained model
 model_path = "/Users/sylviabhoke/Downloads/personal_repos folder/Investor_Risk_Tolerance_and_Robo-Advisor/models/best_model.pkl"
@@ -92,24 +95,34 @@ predicted_risk_tolerance = model.predict(df)[0]
 st.write(f"**Predicted Risk Tolerance Score:** {predicted_risk_tolerance:.2f} (scale of 100)")
 
 # ---- PORTFOLIO OPTIMIZATION ----
-st.write("### 📊 Portfolio Optimization")
+st.write("##### 📊 Portfolio Optimization")
 selected_stocks = st.multiselect("Select Stocks", stock_data.columns)
 
 if st.button("SUBMIT"):
+    c = st.container()
+        
     if selected_stocks:
         sample_data = stock_data[selected_stocks].copy()
         clean_weights, cumulative_returns = optimize_portfolio(sample_data, predicted_risk_tolerance)
         
-        st.markdown("#### 📌 Asset Allocation - Mean-Variance Allocation")
-        st.bar_chart(clean_weights)
+        
+        # Create two columns inside the container
+        col1, col2 = c.columns(2)
+
+        # Bar Chart in the first column
+        with col1:
+            col1.markdown("##### Asset Allocation")
+            col1.bar_chart(clean_weights)
 
         # Compute portfolio value assuming an initial investment of $100
         initial_investment = 100
         portfolio_value = initial_investment * cumulative_returns
 
+        # Line Chart in the second column
+        with col2:
+            col2.markdown("##### Portfolio Value of $100 Over Time")
+            col2.line_chart(portfolio_value)
 
-        st.markdown("#### 📈 Portfolio Value of $100 Investment Over Time")
-        st.line_chart(portfolio_value)
 
 
 
